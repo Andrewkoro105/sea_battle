@@ -8,40 +8,47 @@ void fiend::get2Fiend(fiend Player2)
 {
 	system("cls");
 	cout << "SEA BATTLE\n";
+	if (player == 1)
+		cout << "   Player-1 <- shoot              Player-2\n";
+	else
+		cout << "   Player-1                       Player-2 <- shoot\n";
 	cout << "   A B C D E F G H I J    |       A B C D E F G H I J\n";
 
 	for (int x = 0; x < 10; x++)
 	{
 		char litter = x + 49;
 
-		if (x == 9)
+		if (x == 9)// равнение боковых цифр по правой стороне
 			cout << 10;
 		else
 			cout << ' ' << litter;
 
-		for (int y = 0; y < 10; y++)
-		{
-			cout << ' ' << b[y][x];
-		}
+		if (player == 1)//какое поле рисовать первым (всегда 1)
+			getStr(x);
+		else
+			Player2.getStr(x);
 		cout << "    |    ";
 
-		if (x == 9)
+		if (x == 9)// равнение боковых цифр по правой стороне
 			cout << 10;
 		else
 			cout << ' ' << litter;
 
-		for (int y = 0; y < 10; y++)
-		{
-			cout << ' ' << Player2.b[y][x];
-		}
+		if (player == 2)//какое поле рисовать вторым (всегда 2)
+			getStr(x);
+		else
+			Player2.getStr(x);
 		cout << endl;
 	}
 }
 
-fiend::fiend(int player)
+
+void fiend::getStr(int str)
 {
-	this->player = player;
-	gener();
+	for (int y = 0; y < 10; y++)
+	{
+		cout << ' ' << b[y][str];
+	}
 }
 
 fiend::fiend(int player, bool avto)
@@ -73,6 +80,11 @@ fiend::fiend(int player, bool avto)
 				}
 			}
 		}
+	}
+	else
+	{
+		get();
+		set();
 	}
 }
 
@@ -183,6 +195,8 @@ void fiend::set()
 
 		} while (!ok);
 
+		pointShip = 20;
+
 		for (int _x = x < x1 ? x : x1; _x <= (x > x1 ? x : x1); _x++)//ВЫСТОВЛЕНИЕ КОРАБЛЯ
 		{
 			for (int _y = y < y1 ? y : y1; _y <= (y > y1 ? y : y1); _y++)
@@ -196,9 +210,11 @@ void fiend::set()
 	}
 }
 
-void fiend::Shot(fiend enemy)
+bool fiend::Shot(fiend &enemy)
 {
-	cout << "\nenter the coordinates of the shot\n";
+	get2Fiend(enemy);
+
+	cout << "\nenter the coordinates of the shoot\n";
 
 	char shotСoord[100];
 
@@ -216,7 +232,7 @@ void fiend::Shot(fiend enemy)
 			y = 9;
 		else 
 		{
-			y = shotСoord[2]; y -= 49;
+			y = shotСoord[1]; y -= 49;
 		}
 
 		unOk = x < 0 || x > 9 || y < 0 || y > 9;
@@ -227,9 +243,14 @@ void fiend::Shot(fiend enemy)
 	} while (unOk);
 	
 	if (enemy.a[x][y] == 'O')
+	{
 		enemy.b[x][y] = 'X';
+		pointShip--;
+		return true;
+	}
 	else
+	{
 		enemy.b[x][y] = '0';
-
-	get2Fiend(enemy);
+		return false;
+	}
 }
