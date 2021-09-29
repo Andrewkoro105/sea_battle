@@ -22,3 +22,32 @@ int main()
 
     cout << "won -> " << (meField.pointShip == 0 ? "player1" : "Player2");
 }
+
+void final(fiend Pl1, fiend Pl2)
+{
+	system("cls");
+	cout << "SEA BATTLE\n";
+	cout << "   Player-1                       Player-2\n";
+	cout << "   A B C D E F G H I J    |       A B C D E F G H I J\n";
+
+	for (int x = 0; x < 10; x++)
+	{
+		char litter = x + 49;
+
+		if (x == 9)// равнение боковых цифр по правой стороне
+			cout << 10;
+		else
+			cout << ' ' << litter;
+
+		Pl1.getStr_A(x);
+		cout << "    |    ";
+
+		if (x == 9)// равнение боковых цифр по правой стороне
+			cout << 10;
+		else
+			cout << ' ' << litter;
+
+		Pl2.getStr_A(x);
+		cout << endl;
+	}
+}

@@ -42,12 +42,19 @@ void fiend::get2Fiend(fiend Player2)
 	}
 }
 
-
 void fiend::getStr(int str)
 {
 	for (int y = 0; y < 10; y++)
 	{
 		cout << ' ' << b[y][str];
+	}
+}
+
+void fiend::getStr_A(int str)
+{
+	for (int y = 0; y < 10; y++)
+	{
+		cout << ' ' << a[y][str];
 	}
 }
 
@@ -245,10 +252,20 @@ bool fiend::Shot(fiend &enemy)
 	if (enemy.a[x][y] == 'O')
 	{
 		enemy.b[x][y] = 'X';
+		enemy.a[x][y] = 'X';
+		if (enemy.a[x + 1 == 10 ? 8 : x + 1][y] != 'O' && 
+			enemy.a[x - 1 == -1 ? 1 : x - 1][y] != 'O' && 
+			enemy.a[x][y + 1 == 10 ? 8 : y + 1] != 'O' && 
+			enemy.a[x][y - 1 == 10 ? 1 : y - 1] != 'O')
+		{
+			cout << "KILL";
+			double tim = time(0);
+			while (time(0) - tim != 2) {}
+		}
 		pointShip--;
 		return true;
 	}
-	else
+	else if (enemy.a[x][y] != 'X')
 	{
 		enemy.b[x][y] = '0';
 		return false;

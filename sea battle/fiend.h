@@ -16,6 +16,7 @@ public:
 
 	void get();
 	void set();
+	void getStr_A(int str);
 	bool Shot(fiend &enemu);
 	void get2Fiend(fiend Player2);
 };
